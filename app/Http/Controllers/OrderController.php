@@ -25,19 +25,25 @@ class OrderController extends BaseController {
     public function create(CreateOrderRequest $request) {
         $json = $request->input();
 
-        $order = Order::create([
-                    'statusId' => Order::STATUS_NEW,
-                    'userId' => $request->user()->id
-        ]);
+        $order_result = [
+            'statusId' => Order::STATUS_NEW,
+            'userId' => $request->user()->id
+        ];
+        $order = Order::updateOrCreate($order_result, $order_result);
 
         foreach ($json['items'] as $item) {
 
             $good = Good::find($item['id']);
-            Cart::create([
-                'orderId' => $order->id,
-                'goodId' => $good->id,
-                'amount' => $item['amount'],
-                'price' => $good->price
+            Cart::updateOrCreate(
+                    [
+                        'orderId' => $order->id,
+                        'goodId' => $good->id,
+                    ],
+                    [
+                        'orderId' => $order->id,
+                        'goodId' => $good->id,
+                        'amount' => $item['amount'],
+                        'price' => $good->price
             ]);
         }
         return $json;
