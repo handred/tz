@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Orderpositions extends Model {
+class Cart extends Model {
 
     /**
      * The table associated with the model.

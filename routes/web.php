@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Goods;
-use App\Http\Middleware\Authenticate;
+use App\Http\Controllers\OrderController;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,21 +17,19 @@ use Illuminate\Support\Facades\Route;
   |
  */
 
-Route::get('login', function (Request $request) {
-    Auth::login(User::find(1), 1);
+Route::get('/login', function (Request $request) {
+    Auth::login(User::find(1), 100000);
     return $request->user();
 })->name('login');
 
-Route::get('logout', function () {
+Route::get('/logout', function () {
     Auth::logout();
     return 'logout';
 });
 
 Route::get('catalog', [Goods::class, 'catalog']);
 
-Route::middleware('auth')->get('/create-order', function (Request $request) {
-    return print_r($request->input(), true);
-});
-
-
+Route::post('/create-order', [OrderController::class, 'create'])
+        ->middleware('auth')
+;
 
