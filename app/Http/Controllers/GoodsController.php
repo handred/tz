@@ -10,7 +10,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
 
-class Goods extends BaseController {
+class GoodsController extends BaseController {
 
     //put your code here
     use AuthorizesRequests,

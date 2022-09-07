@@ -27,7 +27,7 @@ Route::get('/logout', function () {
     return 'logout';
 });
 
-Route::get('catalog', [Goods::class, 'catalog']);
+Route::get('catalog', [GoodsController::class, 'catalog']);
 
 Route::post('/create-order', [OrderController::class, 'create'])
         ->middleware('auth')
