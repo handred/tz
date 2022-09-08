@@ -17,19 +17,23 @@ use Illuminate\Support\Facades\Route;
   |
  */
 
-Route::get('/login', function (Request $request) {
+Route::get('login', function (Request $request) {
     Auth::login(User::find(1), 100000);
     return $request->user();
 })->name('login');
 
-Route::get('/logout', function () {
+Route::get('logout', function () {
     Auth::logout();
     return 'logout';
 });
 
 Route::get('catalog', [GoodsController::class, 'catalog']);
 
-Route::post('/create-order', [OrderController::class, 'create'])
+Route::post('create-order', [OrderController::class, 'create'])
+        ->middleware('auth')
+;
+
+Route::post('approve-order', [OrderController::class, 'approve'])
         ->middleware('auth')
 ;
 

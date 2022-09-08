@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\Cart;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model {
 
     CONST STATUS_NEW = 1;
-    CONST STATUS_PERFORM = 1;
+    CONST STATUS_APPROVED = 2;
 
     /**
      * The table associated with the model.
@@ -16,5 +17,13 @@ class Order extends Model {
      */
     protected $table = 'orders';
     protected $fillable = ['statusId', 'userId'];
+
+    public function getSummaAttribute() {
+        return 150;
+    }
+
+    public function positions() {
+        return $this->hasMany(Cart::class, 'orderId');
+    }
 
 }

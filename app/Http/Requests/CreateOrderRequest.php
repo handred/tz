@@ -23,8 +23,8 @@ class CreateOrderRequest extends FormRequest {
     public function rules() {
         return [
             'items' => 'array|required',
-            'items.*.id' => 'required',
-            'items.*.amount' => 'required',
+            'items.*.id' => 'required|numeric',
+            'items.*.amount' => 'required|numeric',
         ];
     }
 
