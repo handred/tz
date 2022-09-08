@@ -18,7 +18,8 @@ class CreateOrderpositionsTable extends Migration {
             $table->integer('orderId');
             $table->integer('goodId');
             $table->integer('amount');
-            $table->decimal('price');
+            $table->double('price');
+            $table->double('summa');
         });
     }
 

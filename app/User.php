@@ -54,6 +54,7 @@ class User extends Authenticatable {
             throw new \Exception('Не найден заказ');
         }
 
+        return $this->order->summa;
  
         if ($this->amount_money < $this->order->summa) {
             throw new \Exception('Недостаточно средств на лицевом счете');

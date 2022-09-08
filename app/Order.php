@@ -19,7 +19,7 @@ class Order extends Model {
     protected $fillable = ['statusId', 'userId'];
 
     public function getSummaAttribute() {
-        return 150;
+        return $this->positions()->sum('summa');
     }
 
     public function positions() {

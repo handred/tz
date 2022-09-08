@@ -24,8 +24,8 @@ class CreateUsersTable extends Migration {
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->decimal('amount_money');
-            $table->decimal('amount_points');
+            $table->double('amount_money');
+            $table->double('amount_points');
         });
     }
 
