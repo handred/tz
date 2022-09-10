@@ -44,17 +44,18 @@ class OrderController extends BaseController {
                 'orderId' => $order->id,
                 'goodId' => $good->id,
                 'amount' => $item['amount'],
-                'price' => $good->price
+                'price' => $good->price,
+                'summa' => $good->price * $item['amount'],
             ]);
         }
         return $json;
     }
 
-    public function approve(Request $request) {
+    public function approve() {
         try {
-            return $request->user()->approve();
+            return auth()->user()->approve();
         } catch (Exception $e) {
-            return ['error' => $e->getMessage()];
+            return ['message' => $e->getMessage()];
         }
     }
 

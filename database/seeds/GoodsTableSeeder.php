@@ -23,8 +23,8 @@ class GoodsTableSeeder extends Seeder {
             Good::create([
                 'name' => $faker->sentence,
                 'description' => $faker->paragraph,
-                'price' => rand(1000, 100000),
-                'amount' => rand(1, 1000),
+                'price' => rand(100, 1000),
+                'amount' => rand(1, 10),
             ]);
         }
     }

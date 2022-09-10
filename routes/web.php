@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Goods;
+use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\OrderController;
 use App\User;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::get('login', function (Request $request) {
-    Auth::login(User::find(1), 100000);
+    Auth::login(User::find(1), true);
     return $request->user();
 })->name('login');
 
@@ -27,13 +27,13 @@ Route::get('logout', function () {
     return 'logout';
 });
 
-Route::get('catalog', [GoodsController::class, 'catalog']);
+Route::get('catalog', [GoodsController::class, 'index']);
+
+Route::get('catalog/{item}', [GoodsController::class, 'view']);
 
 Route::post('create-order', [OrderController::class, 'create'])
-        ->middleware('auth')
-;
+        ->middleware('auth');
 
 Route::post('approve-order', [OrderController::class, 'approve'])
-        ->middleware('auth')
-;
+        ->middleware('auth');
 

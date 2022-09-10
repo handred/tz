@@ -12,6 +12,6 @@ class Cart extends Model {
      * @var string
      */
     protected $table = 'orderpositions';
-    protected $fillable = ['orderId', 'goodId', 'amount', 'price'];
+    protected $fillable = ['orderId', 'goodId', 'amount', 'price', 'summa'];
 
 }

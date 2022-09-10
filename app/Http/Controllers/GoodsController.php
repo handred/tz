@@ -9,7 +9,6 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
-
 class GoodsController extends BaseController {
 
     //put your code here
@@ -17,8 +16,12 @@ class GoodsController extends BaseController {
         DispatchesJobs,
         ValidatesRequests;
 
-    public function catalog() {
+    public function index() {
         return new GoodCollection(Good::paginate(10));
+    }
+
+    public function view(Good $item) {
+        return $item;
     }
 
 }

@@ -19,8 +19,8 @@ class UsersTableSeeder extends Seeder
             'name' => 'test',
             'email' => 'test@test.com',
             'password' => $password,
-            'amount_money'=> 10000,
-            'amount_points'=> 10000,
+            'amount_money'=> 100000,
+            'amount_points'=> 100000,
         ]);
     }
 }

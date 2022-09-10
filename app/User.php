@@ -2,9 +2,10 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Exception;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable {
 
@@ -41,7 +42,7 @@ class User extends Authenticatable {
         return $this->hasMany(Order::class, 'userId', 'id');
     }
 
-    public function getOrderAttribute() {
+    public function cart() {
         return $this->orders()
                         ->where('statusId', Order::STATUS_NEW)
                         ->first();
@@ -49,30 +50,37 @@ class User extends Authenticatable {
 
     public function approve() {
 
-        
-        if (!$this->order) {
-            throw new \Exception('Не найден заказ');
+        $cart = $this->cart();
+        if (!$cart) {
+            throw new Exception('Не найден заказ');
         }
 
-        return $this->order->summa;
- 
-        if ($this->amount_money < $this->order->summa) {
-            throw new \Exception('Недостаточно средств на лицевом счете');
+        if ($this->amount_money < $cart->summa) {
+            throw new Exception('Недостаточно средств');
         }
 
-        $this->amount_money = $this->amount_money - $this->order->summa;
+        $this->amount_money = $this->amount_money - $cart->summa;
+
+        DB::beginTransaction();
+
+        $cart->statusId = Order::STATUS_APPROVED;
+
+        if (!$cart->save()) {
+            DB::rollBack();
+            throw new Exception('error save cart');
+        }
 
         if (!$this->save()) {
-            throw new \Exception('error save user');
+            DB::rollBack();
+            throw new Exception('error save user');
         }
 
-        $this->order->statusId = Order::STATUS_APPROVED;
-        
-        if (!$this->order->save()) {
-            throw new \Exception('error save order');
-        }
+        DB::commit();
 
-        return $this->amount_money;
+        return [
+            'cart' => $cart,
+            'amount_money' => $this->amount_money
+        ];
     }
 
 }
